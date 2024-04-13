@@ -1,0 +1,23 @@
+runtime: nodejs
+env: flex
+
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 2 # Adjust based on your needs
+
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10 # Adjust based on your needs
+
+network:
+  session_affinity: true
+
+handlers:
+  - url: /.*
+    script: auto
+
+env_variables:
+  JWT_SECRET: asdfgnakfngandfgiaofjnwehruh2898934h2u42bhb2bubhu2ed2u
+  MONGODB_URI:mongodb+srv://borgar90:yhV3OF0IhmUiEXvv@grandmasterssmith.7ohoasp.mongodb.net/Grandmasterssmith?retryWrites=true&w=majority
+  MONGODB_DB:Grandmasterssmith
