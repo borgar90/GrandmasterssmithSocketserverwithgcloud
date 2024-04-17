@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const corsOptions = require("./cors");
 const { create } = require("./Controllers/PVPChessGame/Create");
 const { join } = require("./Controllers/PVPChessGame/Join");
+const { disconnect } = require("./Controllers/PVPChessGame/Disconnect");
+const { leave } = require("./Controllers/PVPChessGame/Leave");
 
 module.exports = function (socketServer) {
   const io = socketIo(socketServer, {
@@ -28,7 +30,11 @@ module.exports = function (socketServer) {
 */
   io.on("connection", (socket) => {
     //console.log(`${socket.user.username} connected`);
-
+   
+    socket.on('list_rooms', () => {
+      const rooms = Object.keys(io.sockets.adapter.rooms).filter(room => room); // Filter or modify according to your setup
+      socket.emit('room_list', rooms);
+  });
     socket.on("disconnect", () => {
       //console.log(`${socket.user.username} disconnected`);
     });
@@ -40,10 +46,16 @@ module.exports = function (socketServer) {
     });
 
     console.log("En bruker koblet til:", socket.id);
+   
 
-    socket.on("create", create(socket));
-    socket.on("join", (data) => join(socket)(data));
+//    socket.on("create", create(socket));
+ //   socket.on("join", (data) => join(socket)(data));
 
+ socket.on('create', (data) => create(socket)(data));
+ socket.on('join', (data) => join(socket)(data));
+ socket.on('disconnect',() => disconnect(socket)());
+ socket.on('leave',(data) => leave(socket)(data));
+ 
     //TODO forsikre at om en bruker med en id alerede er i et rom, så kan de ikke bli med i et annet rom, eller bli med i rommet på nytt
     //TODO da er dem allerede i rommet, og det skal vedvare, men server skal ikke crashe!
     //TODO forsikre bare to spillere i et rom
@@ -58,15 +70,17 @@ module.exports = function (socketServer) {
 
     //TODO: lage ferdig leave og disconnect
     //!!VIKTIG!
-
+/*
     socket.on("leave", ({ roomName }) => {
       socket.leave(roomName);
       console.log(`Bruker ${socket.id} har forlatt rommet ${roomName}`);
     });
-
+*/
+    /*
     socket.on("disconnect", () => {
       console.log(`Bruker ${socket.id} har koblet fra`);
       // Her må du håndtere gjeninnkobling og forfith logikk
     });
+ */
   });
 };
