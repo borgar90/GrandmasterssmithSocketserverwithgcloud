@@ -6,6 +6,8 @@ const { join } = require("./Controllers/PVPChessGame/Join");
 const { disconnect } = require("./Controllers/PVPChessGame/Disconnect");
 const { leave } = require("./Controllers/PVPChessGame/Leave");
 
+
+
 module.exports = function (socketServer) {
   const io = socketIo(socketServer, {
     cors: corsOptions,
@@ -31,13 +33,7 @@ module.exports = function (socketServer) {
   io.on("connection", (socket) => {
     //console.log(`${socket.user.username} connected`);
    
-    socket.on('list_rooms', () => {
-      const rooms = Object.keys(io.sockets.adapter.rooms).filter(room => room); // Filter or modify according to your setup
-      socket.emit('room_list', rooms);
-  });
-    socket.on("disconnect", () => {
-      //console.log(`${socket.user.username} disconnected`);
-    });
+   
 
     socket.on("chat message", (msg) => {
       //console.log(`${socket.user.username} sent a message: ${msg}`);
@@ -55,7 +51,8 @@ module.exports = function (socketServer) {
  socket.on('join', (data) => join(socket)(data));
  socket.on('disconnect',() => disconnect(socket)());
  socket.on('leave',(data) => leave(socket)(data));
- 
+
+
     //TODO forsikre at om en bruker med en id alerede er i et rom, så kan de ikke bli med i et annet rom, eller bli med i rommet på nytt
     //TODO da er dem allerede i rommet, og det skal vedvare, men server skal ikke crashe!
     //TODO forsikre bare to spillere i et rom
