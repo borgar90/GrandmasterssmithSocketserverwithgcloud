@@ -22,17 +22,16 @@ const NewUserSchema = new Schema({
     type: String,
     required: true,
   },
-  password: {
+  auth0id: {
     type: String,
     required: true,
+    unique: true,
   },
   elo: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "eloratings",
   },
-  emailVerificationToken: String,
-  emailVerificationTokenExpires: Date,
-  emailVerified: { type: Boolean, default: false },
+
   friends: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -46,25 +45,24 @@ const NewUserSchema = new Schema({
     ref: "picture",
     required: false,
   },
-  role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
-  team: [{ type: mongoose.Schema.Types.ObjectId, ref: "Team" }],
+  role: { type: mongoose.Schema.Types.ObjectId, ref: "Roles" },
+  team: [{ type: mongoose.Schema.Types.ObjectId, ref: "Teams" }],
 });
 // Ensure to populate role and team when querying users
-NewUserSchema.pre("findOne", function (next) {
-  this.populate("role").populate("team");
-  next();
-});
-NewUserSchema.pre("find", function (next) {
-  this.populate("role").populate("team");
-  next();
-});
+
 // Create and export the Mongoose model
-let User;
 
-if (mongoose.models.newusers) {
-  User = mongoose.model("newusers"); //TODO TO BE RENAMED users BEFOR PRODUCTION
-} else {
-  User = mongoose.model("newusers", NewUserSchema);
-}
+const User = mongoose.model("users", NewUserSchema);
 
-exports.modules = User;
+const getUser = async (id) => {
+  try {
+    const user = await User.findOne({ auth0id: id });
+    if (!user) return {};
+    return user;
+  } catch (err) {
+    console.error(err);
+    return {};
+  }
+};
+
+module.exports = { User, getUser };
