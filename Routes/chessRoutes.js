@@ -46,15 +46,15 @@ router.post("/move", async (req, res) => {
     return res.status(400).json({ error: "Missing move data" });
   }
   console.log("Received body:", req.body);
-  const { from, to } = req.body;
+  const { fen, from, to } = req.body;
   console.log("Making move from", from, "to", to);
-  const result = engine.chessMove(chess.fen(), from, to);
+  const result = engine.chessMove(fen, from, to);
 
   console.log("Move result:", result);
   if (result) {
-    const [fen, action] = result;
+    const fen = result;
     chess.load(fen);
-    return res.status(200).send({ fen, action });
+    return res.status(200).send({ fen });
   } else {
     return res.status(400).send({ msg: "Invalid move" });
   }

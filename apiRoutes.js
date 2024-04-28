@@ -9,5 +9,6 @@ const router = express.Router();
 router.use("/media", mediaRoutes);
 router.use("/admin", checkJwt, adminRoutes);
 router.use("/chess", chessRoutes);
+router.use("/getStream", getStreamRoutes);
 
 module.exports = router;

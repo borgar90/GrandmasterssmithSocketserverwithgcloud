@@ -39,11 +39,14 @@ const create = (socket, io) => async (data, userRooms) => {
     socket.emit("error", "You are already in a room.");
     return;
   } else {
-    userRooms.set(socket.user._id, roomName);
-    await saveRoom(room);
+    const newRoom = await saveRoom(room);
+    socket.join(newRoom.id);
+    userRooms.set(socket.user._id, newRoom.id);
     io.emit("rooms_updated", await getAllRooms());
+
     console.log(`Bruker ${socket.id} har opprettet rommet ${roomName}`);
-    // Set a timeout to mark the room as inactive and remove it after 2 seconds
+    // TODO Dette må fikses, er ikke en reell timeout
+    //!! FIIXXX
     setTimeout(async () => {
       // Update the room status in the database
       await Room.updateOne({ name: roomName }, { $set: { active: false } });

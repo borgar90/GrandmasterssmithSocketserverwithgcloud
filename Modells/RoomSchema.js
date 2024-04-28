@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const { NewUserSchema } = require("./User");
+
+const User = mongoose.model("users", NewUserSchema);
 
 const roomSchema = new mongoose.Schema({
   name: {
@@ -7,7 +10,20 @@ const roomSchema = new mongoose.Schema({
   },
   eloMin: Number,
   eloMax: Number,
-  players: Array,
+  players: [
+    {
+      socketId: String,
+      player: {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "users",
+        },
+        photo: String,
+      },
+      role: String,
+      color: String,
+    },
+  ],
   spectators: Array,
   bannedSpectators: Array,
   active: {
@@ -22,6 +38,7 @@ const Room = mongoose.model("Room", roomSchema);
 const saveRoom = async (roomData) => {
   const room = new Room(roomData);
   await room.save();
+  return room;
 };
 
 const updateRoom = async (roomData) => {
@@ -36,7 +53,13 @@ const updateRoom = async (roomData) => {
 // Retrieve all rooms
 async function getAllRooms() {
   try {
-    const rooms = await Room.find({ active: true });
+    const rooms = await Room.find({ active: true })
+      .populate({
+        path: "players.player.elo",
+        strictPopulate: false,
+      })
+      .exec();
+
     if (!rooms) return [];
     return rooms;
   } catch (err) {
@@ -65,7 +88,11 @@ async function getAllRoomsWithUser(id) {
 
 const getRoom = async (id) => {
   try {
-    const rooms = await Room.findOne({ _id: id, active: true });
+    const rooms = await Room.findOne({ _id: id, active: true }).populate({
+      path: "players.player.elo",
+      strictPopulate: false,
+    });
+
     if (!rooms) return {};
     return rooms;
   } catch (err) {

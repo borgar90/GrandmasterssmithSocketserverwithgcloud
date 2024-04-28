@@ -1,10 +1,10 @@
-const { Chess } = require("chess.js");
-const { modules } = require("../../Modells/eloRatingSchema");
+const { Chess, validateFen } = require("chess.js");
 
 class ChessEngine {
-  chess = new Chess();
+  chess = null;
 
   constructor() {
+    this.chess = new Chess();
     this.chess.load(this.newGame());
   }
 
@@ -52,12 +52,14 @@ class ChessEngine {
   };
 
   chessMove = (fen, from, to) => {
-    this.chess.reset();
-    this.chess.load(fen);
+    const tempChess = new Chess();
+    tempChess.load(fen);
+    console.log("chessMove", tempChess.fen());
     try {
-      const move = this.chess.move({ from, to });
+      const move = tempChess.move({ from, to, promotion: "q" });
+      console.log("chessMove move", move.after);
       if (move) {
-        return [this.chess.fen(), move];
+        return move.after;
       }
     } catch (e) {
       return null;

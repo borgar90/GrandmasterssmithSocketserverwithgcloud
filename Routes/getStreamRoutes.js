@@ -5,8 +5,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 router.get("/", async (req, res) => {
-  if (!req.body.user) return res.status(400).send({ msg: "User not found" });
-
+  console.log("GetStream route hit");
   try {
     const client = connect(
       process.env.STREAM_API_KEY,

@@ -18,6 +18,7 @@ const join = (socket, io) => async (data, userRooms) => {
     return;
   }
 
+  socket.join(data.id);
   room.players.push({
     socketId: socket?.user?._id,
     player: socket?.user,
@@ -30,40 +31,15 @@ const join = (socket, io) => async (data, userRooms) => {
   if (currentRoom) {
     socket.emit("error", "You are already in a room.");
   } else {
-    userRooms.set(socket.user._id, room);
     await updateRoom(room);
+    userRooms.set(socket.user._id, room._id);
+    socket.join(room._id);
     if (room.players.length === 2) {
-      io.emit("game_ready", room);
+      io.to(room._id).emit("game_ready", room);
+    } else {
+      io.to(room._id).emit("room_updated", room);
     }
-    io.emit("rooms_updated", await getAllRooms());
   }
-
-  /*
-  if (role === "player" && room.players.length < 2) {
-    room.players.push({
-      socketId: socket.id,
-      player: player,
-      role: "player",
-      color: "hvit",
-    });
-
-    console.log("Spiller koblet til matchen: " + socket.id);
-    //socket.join(roomName);
-    //socket.to(roomName).emit("new_player", socket.id);
-    //  socket.emit(`Spiller ${socket.id} har sluttet seg til rommet ${roomName} som ${room.players.length === 1 ? "hvit" : "sort"}`);
-  } else if (
-    role === "spectator" &&
-    !room.bannedSpectators.includes(socket.id)
-  ) {
-    room.spectators.push(socket.id);
-    // socket.join(roomName);
-    // socket.emit(`Tilskuer ${socket.id} har sluttet seg til rommet ${roomName}`);
-  } else {
-    socket.emit("error", "Kan ikke bli med i rommet");
-  }
-  rooms[roomName] = room;
-  socket.emit("rooms_updated", room);
-  */
 };
 
 exports.join = join;

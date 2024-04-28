@@ -56,7 +56,7 @@ const User = mongoose.model("users", NewUserSchema);
 
 const getUser = async (id) => {
   try {
-    const user = await User.findOne({ auth0id: id });
+    const user = await User.findOne({ auth0id: id }).populate("elo");
     if (!user) return {};
     return user;
   } catch (err) {
@@ -65,4 +65,4 @@ const getUser = async (id) => {
   }
 };
 
-module.exports = { User, getUser };
+module.exports = { User, getUser, NewUserSchema };
