@@ -4,6 +4,11 @@ const { connect } = require("getstream");
 const dotenv = require("dotenv");
 dotenv.config();
 
+/**
+ * @description Routes for getStream
+ * @author Borgar Flaen Stensrud & Abdallah Amidu Ndikumana
+ */
+
 router.get("/", async (req, res) => {
   console.log("GetStream route hit");
   try {

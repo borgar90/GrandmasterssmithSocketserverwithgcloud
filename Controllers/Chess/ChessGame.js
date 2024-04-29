@@ -1,6 +1,9 @@
 const { Chess, validateFen } = require("chess.js");
 const ChessEngine = require("./engine");
-
+/**
+ * @description En klasse for et chess game
+ * @author Borgar Flaen Stensrud
+ */
 class ChessGame {
   chess = new Chess();
   fen = ChessEngine.newGame();

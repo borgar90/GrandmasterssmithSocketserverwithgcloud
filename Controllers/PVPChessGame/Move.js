@@ -1,3 +1,8 @@
+/**
+ * @description Socket for å flytte brikker i sjakkspillet
+ * @author Borgar Flaen Stensrud & Hussein Abdul-Ameer
+ */
+
 const move = (socket, io) => async (data) => {
   const { gameId, from, to } = data;
   const game = activeGames.get(gameId);

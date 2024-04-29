@@ -4,7 +4,10 @@ const {
   updateRoom,
   getAllRoomsWithUser,
 } = require("../../Modells/RoomSchema");
-
+/**
+ * @description Socket for å joine et rom for sjakkspill, som allerede er laget.
+ * @author Borgar Flaen Stensrud & Hussein Abdul-Ameer
+ */
 const join = (socket, io) => async (data, userRooms) => {
   const room = await getRoom(data.id);
 

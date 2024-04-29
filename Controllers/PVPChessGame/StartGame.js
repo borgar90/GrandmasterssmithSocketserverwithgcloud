@@ -1,3 +1,8 @@
+/**
+ * @description Socket for å starte et sjakkspill
+ * @author Borgar Flaen Stensrud & Hussein Abdul-Ameer
+ */
+
 const StartGame = (socket, io) => (data) => {
   const room = getRoom(data.roomId);
   const [player1, player2] = room.players;

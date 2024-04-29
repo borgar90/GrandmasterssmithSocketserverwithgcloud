@@ -1,5 +1,8 @@
 const { Chess, validateFen } = require("chess.js");
-
+/**
+ * @description Sjakkmotor for å sjekke regler og utføre trekk
+ * @author Borgar Flaen Stensrud
+ */
 class ChessEngine {
   chess = null;
 

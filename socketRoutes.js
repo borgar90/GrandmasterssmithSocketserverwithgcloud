@@ -1,13 +1,11 @@
 const socketIo = require("socket.io");
-const jwt = require("jsonwebtoken");
 const corsOptions = require("./cors");
 const { create } = require("./Controllers/PVPChessGame/Create");
 const { join } = require("./Controllers/PVPChessGame/Join");
 const { disconnect } = require("./Controllers/PVPChessGame/Disconnect");
-const { leave } = require("./Controllers/PVPChessGame/Leave");
+const { leave } = require("./Controllers/PVPChessGame/leave");
 const { getAllRooms, getAllRoomsWithUser } = require("./Modells/RoomSchema");
-const { getUser } = require("./Modells/User");
-const ChessEngine = require("./Controllers/Chess/engine");
+
 const { move } = require("./Controllers/PVPChessGame/Move");
 const RequestRooms = require("./Controllers/PVPChessGame/RequestRooms");
 const { StartGame } = require("./Controllers/PVPChessGame/StartGame");
@@ -15,6 +13,11 @@ const userAuth = require("./Middleware/SocketIO");
 const connectedUsers = new Map();
 const userRooms = new Map();
 const activeGames = new Map();
+
+/**
+ * @description Socketserver for å håndtere socket.io events
+ * @author Borgar Flaen Stensrud & Hussein Abdul-Ameer
+ */
 
 module.exports = async function (socketServer) {
   const io = socketIo(socketServer, {

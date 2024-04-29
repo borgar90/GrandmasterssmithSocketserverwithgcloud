@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
+/**
+ * @description Model og schema for PictureLibrary og Picture
+ * @author Borgar Flaen Stensrud
+ */
 const PictureSchema = new Schema({
   user: {
     type: mongoose.Types.ObjectId,

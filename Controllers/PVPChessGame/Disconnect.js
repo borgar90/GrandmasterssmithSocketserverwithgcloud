@@ -1,3 +1,10 @@
+/**
+ * @description Socket for å lage rom for miste forbindelse til serveren, logge av etc.
+ * @author Borgar Flaen Stensrud & Hussein Abdul-Ameer
+ */
+
+//TODO får error, disconnect funker ikke.
+
 const disconnect = (socket) => (connectedUsers, reason) => {
   if (connectedUsers.has(socket.user.id)) {
     console.log(

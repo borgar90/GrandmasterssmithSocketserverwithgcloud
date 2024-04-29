@@ -1,7 +1,10 @@
+/**
+ * @description Cors options for serveren
+ * @author Borgar Flaen Stensrud
+ */
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://grandmasterssmith.ngrok.app"], // Match the frontend's domain
-  methods: ["GET", "POST"], // Only allow GET and POST requests
-  WebTransport: ["*"],
+  origin: ["https://app-2000-gruppe04.vercel.app/"],
+  methods: ["GET", "POST"],
 };
 
 exports.corsOptions = corsOptions;

@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 const { NewUserSchema } = require("./User");
 
 const User = mongoose.model("users", NewUserSchema);
-
+/**
+ * @description Model og schema for Room
+ * @author Borgar Flaen Stensrud & Hussein Abdul-Ameer
+ */
 const roomSchema = new mongoose.Schema({
   name: {
     type: String,

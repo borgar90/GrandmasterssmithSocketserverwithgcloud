@@ -2,6 +2,11 @@ const { Storage } = require("@google-cloud/storage");
 const googleStorage = new Storage();
 const bucketName = "grandmasters-smith";
 
+/**
+ * @description Laster opp fil til Google Cloud Storage
+ * @author Borgar Flaen Stensrud
+ */
+
 const uploadFileToGCS = async (fileBuffer, destination) => {
   const bucket = googleStorage.bucket(bucketName);
   const file = bucket.file(destination);

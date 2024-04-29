@@ -1,3 +1,8 @@
+/**
+ * @description Rengjør navn for bruk i URL
+ * @author Borgar Flaen Stensrud
+ */
+
 const sanitizeNameForUrl = (name) => {
   return name
     .trim()

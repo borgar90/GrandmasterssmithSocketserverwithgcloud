@@ -8,6 +8,11 @@ const connectDB = require("./db");
 const multer = require("multer");
 const cookieParser = require("cookie-parser");
 
+/**
+ * @description Serveren bruker cookie-parser, express.json og cors for å håndtere cookies, json og cors.
+ * @author Borgar Flaen Stensrud & Hussein Abdul-Ameer
+ */
+
 app.set("trust proxy", true);
 
 app.use(cors(corsOptions));

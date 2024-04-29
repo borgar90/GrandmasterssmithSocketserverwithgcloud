@@ -2,8 +2,10 @@ const { EloRatingSchema } = require("./eloRatingSchema");
 const mongoose = require("mongoose");
 const { Schema, Model } = mongoose;
 
-// Create and export the Mongoose model
-let EloRating;
+/**
+ * @description Model og schema for User
+ * @author Borgar Flaen Stensrud & Hussein Abdul-Ameer
+ */
 
 if (mongoose.models.eloratings) {
   EloRating = mongoose.model("eloratings");

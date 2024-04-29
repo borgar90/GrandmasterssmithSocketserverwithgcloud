@@ -6,7 +6,10 @@ const {
 } = require("../../Modells/RoomSchema");
 let rooms = [];
 exports.rooms = rooms;
-
+/**
+ * @description Socket for å lage rom for sjakkspill
+ * @author Borgar Flaen Stensrud & Hussein Abdul-Ameer
+ */
 const create = (socket, io) => async (data, userRooms) => {
   const { roomName, player, eloMin, eloMax } = data;
 

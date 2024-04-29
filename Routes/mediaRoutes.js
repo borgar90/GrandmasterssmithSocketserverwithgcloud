@@ -11,6 +11,11 @@ const Picture = require("../Modells/PictureLibrary");
 const router = express.Router();
 const storage = multer.memoryStorage(); // Use memory storage
 
+/**
+ * @description Router for media
+ * @author Borgar Flaen Stensrud
+ */
+
 const fileFilter = (req, file, cb) => {
   const filetypes = /jpeg|jpg|png|gif|bmp|tiff|webp/;
   const mimetype = filetypes.test(file.mimetype);

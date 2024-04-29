@@ -4,6 +4,12 @@ const {
   getAllRoomsWithUser,
   getAllRooms,
 } = require("../../Modells/RoomSchema");
+
+/**
+ * @description Socket for å lage foralte rom for sjakkspill
+ * @author Borgar Flaen Stensrud & Hussein Abdul-Ameer
+ */
+
 const leave = (socket, io) => async (userRooms) => {
   if (!socket?.user?._id) {
     console.log("No user ID found on socket.");
@@ -38,4 +44,4 @@ const leave = (socket, io) => async (userRooms) => {
   );
 };
 
-exports.leave = leave;
+module.exports = leave;

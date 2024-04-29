@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { Chess } = require("chess.js");
 const ChessEngine = require("../Controllers/Chess/engine");
+/**
+ * @description Routes for chess
+ * @author Borgar Flaen Stensrud & Hussein Abdul-Ameer
+ */
 
 const chess = new Chess();
 const engine = new ChessEngine();

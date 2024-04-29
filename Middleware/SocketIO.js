@@ -1,5 +1,10 @@
 const { getUser } = require("../Modells/User");
 
+/**
+ * @description middleware for å autentisere bruker ved hjelp av socket.io
+ * @author Borgar Flaen Stensrud & Hussein Abdul-Ameer
+ */
+
 const userAuth = (socket, next) => async (connectedUsers) => {
   const userID = socket.handshake.query.userId;
   const userPicture = socket.handshake.query.picture;
