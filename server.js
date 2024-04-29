@@ -6,7 +6,6 @@ const app = express();
 const server = http.createServer(app);
 const connectDB = require("./db");
 const multer = require("multer");
-const cookieParser = require("cookie-parser");
 
 /**
  * @description Serveren bruker cookie-parser, express.json og cors for å håndtere cookies, json og cors.
@@ -16,7 +15,7 @@ const cookieParser = require("cookie-parser");
 app.set("trust proxy", true);
 
 app.use(cors(corsOptions));
-app.use(cookieParser());
+
 app.use(express.json());
 
 connectDB();
